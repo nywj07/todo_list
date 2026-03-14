@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>计划待办工具</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- 背景图片轮播区域（中间区域） -->
+    <div class="background-slider">
+        <div class="slider-item"></div>
+        <div class="slider-item"></div>
+        <div class="slider-item"></div>
+        <div class="slider-item"></div>
+        <div class="slider-item"></div>
+    </div>
+
+    <!-- 左侧固定图片（06.jpg） -->
+    <div class="side-image left-side">
+        <img src="06.jpg" alt="左侧图片">
+    </div>
+
+    <!-- 右侧固定图片（07.jpg） -->
+    <div class="side-image right-side">
+        <img src="07.jpg" alt="右侧图片">
+    </div>
+
+    <!-- 顶部统计信息栏 -->
+    <div class="stats-top">
+        <span id="totalCount">总任务：0</span>
+        <span id="completedCount">已完成：0</span>
+    </div>
+
+    <!-- 左侧未完成任务区域 -->
+    <div class="todo-section left-section">
+        <h2>待完成</h2>
+        <div class="todo-list">
+            <ul id="todoList"></ul>
+        </div>
+    </div>
+
+    <!-- 右侧已完成任务区域 -->
+    <div class="todo-section right-section">
+        <h2>已完成</h2>
+        <div class="todo-list">
+            <ul id="completedList"></ul>
+        </div>
+    </div>
+
+    <!-- 底部任务输入框 -->
+    <div class="input-section-bottom">
+        <input 
+            type="text" 
+            id="todoInput" 
+            placeholder="输入你要做的事情..." 
+            onkeypress="handleKeyPress(event)"
+        >
+        <button onclick="addTodo()" class="add-btn">添加</button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

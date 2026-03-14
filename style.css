@@ -1,0 +1,385 @@
+/* ========================================
+   全局样式设置
+   ======================================== */
+* {
+    margin: 0;           /* 重置默认外边距 */
+    padding: 0;          /* 重置默认内边距 */
+    box-sizing: border-box; /* 盒模型设置为border-box，包含padding和border在width/height内 */
+}
+
+body {
+    font-family: 'Microsoft YaHei', Arial, sans-serif; /* 字体设置，优先使用微软雅黑 */
+    background: transparent;        /* 背景透明 */
+    min-height: 100vh;              /* 最小高度为视口高度的100% */
+    padding: 20px;                  /* 内边距20px */
+    position: relative;             /* 相对定位，为绝对定位子元素提供参考 */
+    overflow-x: hidden;             /* 水平滚动条隐藏 */
+    display: flex;                  /* 弹性布局 */
+    flex-direction: column;         /* 主轴方向为垂直方向 */
+    align-items: flex-start;        /* 项目在交叉轴上左对齐 */
+}
+
+/* ========================================
+   背景图片轮播区域（中间区域）
+   显示 01-05 号图片，每 6 秒切换一次
+   ======================================== */
+.background-slider {
+    position: fixed;               /* 固定定位，相对于视口定位 */
+    top: 0;                        /* 顶部对齐 */
+    left: 0;                       /* 左侧对齐 */
+    width: 100%;                   /* 宽度占满整个视口 */
+    height: 100%;                  /* 高度占满整个视口 */
+    z-index: -2;                   /* 层级设置为-2，确保在最底层 */
+    overflow: hidden;              /* 超出部分隐藏 */
+}
+
+/* 背景遮罩层，降低背景亮度，保证文字可读性 */
+.background-slider::before {
+    content: '';                    /* 伪元素必须有content才能显示 */
+    position: absolute;            /* 绝对定位，相对于.slider-container */
+    top: 0;                        /* 顶部对齐 */
+    left: 0;                       /* 左侧对齐 */
+    width: 100%;                   /* 宽度占满容器 */
+    height: 100%;                  /* 高度占满容器 */
+    background: rgba(0, 0, 0, 0.1); /* 半透明黑色背景，增加文字可读性 */
+    z-index: 1;                    /* 层级高于背景图片，低于其他内容 */
+}
+
+/* 轮播图片项 */
+.slider-item {
+    position: absolute;            /* 绝对定位，所有图片叠加在一起 */
+    top: 0;                        /* 顶部对齐 */
+    left: 0;                       /* 左侧对齐 */
+    width: 100%;                   /* 宽度占满容器 */
+    height: 100%;                  /* 高度占满容器 */
+    background-size: contain;      /* 图片等比缩放，保持完整显示 */
+    background-position: center;   /* 背景图居中显示 */
+    background-repeat: no-repeat;   /* 背景图不重复 */
+    opacity: 0;                    /* 初始透明度为0（隐藏） */
+    animation: slideAnimation 30s infinite; /* 应用轮播动画，30秒循环 */
+}
+
+/* 5 张轮播图片，分别对应 01-05.jpg */
+.slider-item:nth-child(1) {
+    background-image: url('01.jpg');  /* 第一张背景图 */
+    animation-delay: 0s;              /* 动画延迟0秒开始 */
+    opacity: 1;                      /* 第一张图初始可见 */
+}
+
+.slider-item:nth-child(2) {
+    background-image: url('02.jpg');  /* 第二张背景图 */
+    animation-delay: 6s;              /* 动画延迟6秒开始 */
+}
+
+.slider-item:nth-child(3) {
+    background-image: url('03.jpg');  /* 第三张背景图 */
+    animation-delay: 12s;             /* 动画延迟12秒开始 */
+}
+
+.slider-item:nth-child(4) {
+    background-image: url('04.jpg');  /* 第四张背景图 */
+    animation-delay: 18s;             /* 动画延迟18秒开始 */
+}
+
+.slider-item:nth-child(5) {
+    background-image: url('05.jpg');  /* 第五张背景图 */
+    animation-delay: 24s;             /* 动画延迟24秒开始 */
+}
+
+/* 轮播动画关键帧 */
+@keyframes slideAnimation {
+    0%, 5% {
+        opacity: 1;                  /* 0-5%时间段内完全可见 */
+        transform: scale(1);          /* 正常大小 */
+    }
+    20% {
+        opacity: 0;                  /* 20%时开始淡出 */
+        transform: scale(1);         /* 保持正常大小 */
+    }
+    25%, 45% {
+        opacity: 1;                  /* 25-45%时间段内完全可见 */
+        transform: scale(1.05);      /* 放大到1.05倍，产生轻微缩放效果 */
+    }
+    50% {
+        opacity: 0;                  /* 50%时完全隐藏 */
+        transform: scale(1);         /* 恢复正常大小 */
+    }
+    100% {
+        opacity: 0;                  /* 100%时保持隐藏 */
+    }
+}
+
+h1 {
+    text-align: center;              /* 文本居中对齐 */
+    color: white;                   /* 白色文字 */
+    margin: 30px 0;                 /* 上下边距30px，左右0 */
+    font-size: 36px;                /* 字号36px */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* 文字阴影，增强可读性 */
+}
+
+/* ========================================
+   顶部统计信息栏
+   ======================================== */
+.stats-top {
+    display: flex;                  /* 弹性布局 */
+    justify-content: space-between; /* 子元素两端对齐，间距平均分配 */
+    padding: 15px 25px;           /* 内边距：上下15px，左右25px */
+    margin-top: 20px;             /* 上边距20px */
+    color: white;                 /* 白色文字 */
+    font-size: 18px;              /* 字号18px */
+    font-weight: bold;            /* 粗体 */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); /* 文字阴影 */
+    background: rgba(0, 0, 0, 0.2); /* 半透明黑色背景 */
+    border-radius: 10px;          /* 圆角10px */
+    width: 33.33%;                /* 宽度占父容器的33.33% */
+}
+
+/* ========================================
+   任务列表区域（左右两侧）
+   ======================================== */
+.todo-section {
+    position: absolute;            /* 绝对定位 */
+    top: 150px;                   /* 距离顶部150px */
+    bottom: 150px;                /* 距离底部150px，实现自适应高度 */
+    width: 30%;                   /* 宽度占父容器30% */
+    background: rgba(255, 255, 255, 0.1); /* 半透明白色背景 */
+    border-radius: 10px;          /* 圆角10px */
+    padding: 15px;                /* 内边距15px */
+    backdrop-filter: blur(3px);   /* 背景模糊效果，毛玻璃质感 */
+    border: 1px solid rgba(255, 255, 255, 0.15); /* 半透明白色边框 */
+    overflow: hidden;             /* 溢出内容隐藏 */
+    display: flex;                /* 弹性布局 */
+    flex-direction: column;       /* 垂直排列子元素 */
+}
+
+/* 左侧待完成任务区域 */
+.left-section {
+    left: 20px;                   /* 距离左侧20px */
+}
+
+/* 右侧已完成任务区域 */
+.right-section {
+    position: absolute;           /* 绝对定位 */
+    top: 150px;                   /* 距离顶部150px */
+    bottom: 120px;                /* 距离底部120px，为底部输入框留出空间 */
+    right: 20px;                  /* 距离右侧20px */
+    width: 30%;                   /* 宽度占父容器30% */
+    background: rgba(255, 255, 255, 0.1); /* 半透明白色背景 */
+    border-radius: 10px;          /* 圆角10px */
+    padding: 15px;                /* 内边距15px */
+    backdrop-filter: blur(3px);   /* 背景模糊效果，毛玻璃质感 */
+    border: 1px solid rgba(255, 255, 255, 0.15); /* 半透明白色边框 */
+    overflow: hidden;             /* 溢出内容隐藏 */
+    display: flex;                /* 弹性布局 */
+    flex-direction: column;       /* 垂直排列子元素 */
+}
+
+/* 区域标题样式 */
+.todo-section h2 {
+    color: white;                 /* 白色文字 */
+    font-size: 20px;              /* 字号20px */
+    margin-bottom: 15px;          /* 下边距15px */
+    text-align: center;           /* 文本居中对齐 */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); /* 文字阴影，增强可读性 */
+}
+
+/* 任务列表容器 */
+.todo-list {
+    flex: 1;                      /* 弹性伸缩，占据剩余空间 */
+    margin: 0;                    /* 重置外边距 */
+    padding: 0;                   /* 重置内边距 */
+    overflow-y: auto;             /* 垂直滚动条，内容溢出时出现 */
+}
+
+/* 自定义滚动条样式 */
+.todo-list::-webkit-scrollbar {
+    width: 6px;                   /* 滚动条宽度6px */
+}
+
+.todo-list::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1); /* 滚动条轨道背景色 */
+    border-radius: 3px;           /* 轨道圆角 */
+}
+
+.todo-list::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3); /* 滚动条滑块背景色 */
+    border-radius: 3px;           /* 滑块圆角 */
+}
+
+.todo-list::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.5); /* 鼠标悬停时滑块颜色变深 */
+}
+
+/* ========================================
+   底部输入框区域
+   ======================================== */
+.input-section-bottom {
+    display: flex;                /* 弹性布局 */
+    gap: 10px;                    /* 子元素间距10px */
+    margin-top: auto;             /* 外边距自动，实现底部对齐 */
+    margin-bottom: 30px;          /* 下边距30px */
+    width: 33.33%;                /* 宽度占父容器33.33% */
+    position: absolute;           /* 绝对定位 */
+    bottom: 20px;               /* 距离底部20px */
+    left: 20px;                 /* 距离左侧20px */
+}
+
+/* 输入框样式 */
+.input-section-bottom #todoInput {
+    flex: 1;                      /* 弹性伸缩，占据可用空间 */
+    padding: 15px 20px;           /* 内边距：上下15px，左右20px */
+    border: 2px solid rgba(255, 255, 255, 0.5); /* 半透明白色边框 */
+    border-radius: 10px;          /* 圆角10px */
+    font-size: 16px;              /* 字号16px */
+    background: rgba(255, 255, 255, 0.2); /* 半透明白色背景 */
+    color: white;                 /* 白色文字 */
+    backdrop-filter: blur(5px);   /* 背景模糊效果 */
+    transition: all 0.3s;         /* 所有属性变化都有0.3秒过渡效果 */
+}
+
+.input-section-bottom #todoInput::placeholder {
+    color: rgba(255, 255, 255, 0.8); /* 占位符文字颜色 */
+}
+
+.input-section-bottom #todoInput:focus {
+    outline: none;                /* 移除焦点轮廓线 */
+    border-color: rgba(255, 255, 255, 0.9); /* 边框颜色更明显 */
+    background: rgba(255, 255, 255, 0.3); /* 背景更明显 */
+}
+
+/* 添加按钮样式 */
+.input-section-bottom .add-btn {
+    padding: 15px 30px;           /* 内边距：上下15px，左右30px */
+    background: rgba(255, 255, 255, 0.3); /* 半透明白色背景 */
+    color: white;                 /* 白色文字 */
+    border: 2px solid rgba(255, 255, 255, 0.5); /* 半透明白色边框 */
+    border-radius: 10px;          /* 圆角10px */
+    font-size: 18px;              /* 字号18px */
+    font-weight: bold;            /* 粗体 */
+    cursor: pointer;              /* 鼠标指针为手型 */
+    backdrop-filter: blur(5px);   /* 背景模糊效果 */
+    transition: all 0.3s;         /* 所有属性变化都有0.3秒过渡效果 */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3); /* 文字阴影 */
+}
+
+.input-section-bottom .add-btn:hover {
+    background: rgba(255, 255, 255, 0.5); /* 鼠标悬停时背景更明显 */
+    transform: translateY(-2px);   /* 向上移动2px，产生悬浮效果 */
+}
+
+.input-section-bottom .add-btn:active {
+    transform: translateY(0);      /* 按下时恢复原位 */
+}
+
+/* ========================================
+   单个任务项样式
+   ======================================== */
+ul {
+    list-style: none;             /* 移除列表默认样式 */
+}
+
+li {
+    display: flex;                /* 弹性布局 */
+    align-items: center;          /* 垂直居中对齐 */
+    padding: 18px 20px;           /* 内边距：上下18px，左右20px */
+    background: rgba(255, 255, 255, 0.15); /* 半透明白色背景 */
+    margin-bottom: 12px;          /* 下边距12px */
+    border-radius: 10px;          /* 圆角10px */
+    transition: all 0.3s;         /* 所有属性变化都有0.3秒过渡效果 */
+    border: 1px solid rgba(255, 255, 255, 0.2); /* 半透明白色边框 */
+    backdrop-filter: blur(3px);   /* 背景模糊效果，毛玻璃质感 */
+}
+
+li:hover {
+    background: rgba(255, 255, 255, 0.25); /* 鼠标悬停时背景更明显 */
+    transform: translateX(5px);    /* 向右移动5px，产生交互反馈 */
+}
+
+/* 复选框样式 */
+li input[type="checkbox"] {
+    width: 22px;                  /* 宽度22px */
+    height: 22px;                 /* 高度22px */
+    margin-right: 15px;           /* 右边距15px */
+    cursor: pointer;              /* 鼠标指针为手型 */
+    accent-color: rgba(255, 255, 255, 0.8); /* 复选框选中时的颜色 */
+}
+
+/* 任务文本样式 */
+li span {
+    flex: 1;                      /* 弹性伸缩，占据剩余空间 */
+    font-size: 18px;              /* 字号18px */
+    color: white;                 /* 白色文字 */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); /* 文字阴影，增强可读性 */
+}
+
+/* 已完成任务样式（文字删除线） */
+li.completed span {
+    text-decoration: line-through; /* 添加删除线 */
+    color: rgba(255, 255, 255, 0.6); /* 颜色变浅，表示已完成 */
+}
+
+li.completed {
+    background: rgba(0, 0, 0, 0.1); /* 背景变为半透明黑色 */
+}
+
+/* 删除按钮样式 */
+li .delete-btn {
+    background: rgba(255, 71, 87, 0.7); /* 红色背景，半透明 */
+    color: white;                 /* 白色文字 */
+    border: none;                 /* 无边框 */
+    padding: 8px 15px;            /* 内边距：上下8px，左右15px */
+    border-radius: 8px;           /* 圆角8px */
+    cursor: pointer;              /* 鼠标指针为手型 */
+    font-size: 14px;              /* 字号14px */
+    margin-left: 10px;            /* 左边距10px */
+    transition: all 0.3s;         /* 所有属性变化都有0.3秒过渡效果 */
+    backdrop-filter: blur(3px);   /* 背景模糊效果，毛玻璃质感 */
+}
+
+li .delete-btn:hover {
+    background: rgba(255, 71, 87, 0.9); /* 鼠标悬停时红色更明显 */
+}
+
+/* ========================================
+   左右两侧固定图片（06.jpg 和 07.jpg）
+   ======================================== */
+.side-image {
+    position: fixed;              /* 固定定位，随页面滚动 */
+    top: 0;                       /* 顶部对齐 */
+    height: 100%;                 /* 高度100%视口高度 */
+    z-index: -1;                  /* 层级-1，在内容下方但在背景上方 */
+    overflow: hidden;            /* 超出部分隐藏 */
+}
+
+.side-image img {
+    width: 100%;                  /* 图片宽度100%容器 */
+    height: 100%;                 /* 图片高度100%容器 */
+    object-fit: cover;            /* 图片覆盖整个容器，保持宽高比，可能裁剪 */
+    display: block;               /* 块级元素显示 */
+}
+
+/* 左侧固定图片（06.jpg） */
+.left-side {
+    left: 0;                      /* 左侧对齐 */
+    width: 33.33%;                /* 宽度占视口33.33% */
+}
+
+/* 右侧固定图片（07.jpg） */
+.right-side {
+    right: 0;                     /* 右侧对齐 */
+    width: 33.33%;                /* 宽度占视口33.33% */
+}
+
+/* 原有的stats类被替换为新的stats-top类，所以这里移除旧的stats样式 */
+
+/* 空状态提示样式 */
+.empty-state {
+    text-align: center;           /* 文本居中对齐 */
+    padding: 60px 20px;           /* 内边距：上下60px，左右20px */
+    color: white;                 /* 白色文字 */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); /* 文字阴影，增强可读性 */
+}
+
+.empty-state p {
+    font-size: 18px;              /* 字号18px */
+}
