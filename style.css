@@ -47,65 +47,64 @@ body {
 
 /* 轮播图片项 */
 .slider-item {
-    position: absolute;            /* 绝对定位，所有图片叠加在一起 */
-    top: 0;                        /* 顶部对齐 */
-    left: 0;                       /* 左侧对齐 */
-    width: 100%;                   /* 宽度占满容器 */
-    height: 100%;                  /* 高度占满容器 */
-    background-size: contain;      /* 图片等比缩放，保持完整显示 */
-    background-position: center;   /* 背景图居中显示 */
-    background-repeat: no-repeat;   /* 背景图不重复 */
-    opacity: 0;                    /* 初始透明度为0（隐藏） */
-    animation: slideAnimation 30s infinite; /* 应用轮播动画，30秒循环 */
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0;
+    animation: slideAnimation 25s infinite; /* 25 秒循环，每张 5 秒 */
 }
 
 /* 5 张轮播图片，分别对应 01-05.jpg */
 .slider-item:nth-child(1) {
-    background-image: url('01.jpg');  /* 第一张背景图 */
-    animation-delay: 0s;              /* 动画延迟0秒开始 */
-    opacity: 1;                      /* 第一张图初始可见 */
+    background-image: url('01.jpg');
+    animation-delay: 0s;
+    opacity: 1;
 }
 
 .slider-item:nth-child(2) {
-    background-image: url('02.jpg');  /* 第二张背景图 */
-    animation-delay: 6s;              /* 动画延迟6秒开始 */
+    background-image: url('02.jpg');
+    animation-delay: 5s;  /* 每 5 秒切换 */
 }
 
 .slider-item:nth-child(3) {
-    background-image: url('03.jpg');  /* 第三张背景图 */
-    animation-delay: 12s;             /* 动画延迟12秒开始 */
+    background-image: url('03.jpg');
+    animation-delay: 10s; /* 每 5 秒切换 */
 }
 
 .slider-item:nth-child(4) {
-    background-image: url('04.jpg');  /* 第四张背景图 */
-    animation-delay: 18s;             /* 动画延迟18秒开始 */
+    background-image: url('04.jpg');
+    animation-delay: 15s; /* 每 5 秒切换 */
 }
 
 .slider-item:nth-child(5) {
-    background-image: url('05.jpg');  /* 第五张背景图 */
-    animation-delay: 24s;             /* 动画延迟24秒开始 */
+    background-image: url('05.jpg');
+    animation-delay: 20s; /* 每 5 秒切换 */
 }
 
-/* 轮播动画关键帧 */
 @keyframes slideAnimation {
-    0%, 5% {
-        opacity: 1;                  /* 0-5%时间段内完全可见 */
-        transform: scale(1);          /* 正常大小 */
+    0%, 10% {
+        opacity: 1;
+        transform: scale(1);
     }
     20% {
-        opacity: 0;                  /* 20%时开始淡出 */
-        transform: scale(1);         /* 保持正常大小 */
+        opacity: 0;
+        transform: scale(1);
     }
     25%, 45% {
-        opacity: 1;                  /* 25-45%时间段内完全可见 */
-        transform: scale(1.05);      /* 放大到1.05倍，产生轻微缩放效果 */
+        opacity: 1;
+        transform: scale(1.05);
     }
     50% {
-        opacity: 0;                  /* 50%时完全隐藏 */
-        transform: scale(1);         /* 恢复正常大小 */
+        opacity: 0;
+        transform: scale(1);
     }
     100% {
-        opacity: 0;                  /* 100%时保持隐藏 */
+        opacity: 0;
     }
 }
 
